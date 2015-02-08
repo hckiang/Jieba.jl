@@ -13,7 +13,7 @@ install:
   - cp c:\mingw32\bin\mingw32-make.exe c:\mingw32\bin\make.exe
   - set PATH=C:\mingw32\bin;%PATH%
   - make -v
-  - move C:\projects\jieba-jl C:\projects\Jieba
+  - move C:\projects\jieba-jl-84khi C:\projects\Jieba
 
 build_script:
 # Need to convert from shallow to complete for Pkg.clone to work
