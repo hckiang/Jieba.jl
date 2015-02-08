@@ -1,0 +1,23 @@
+environment:
+  matrix:
+  - JULIAVERSION: "win32"
+
+install:
+# Download most recent Julia Windows binary
+  - ps: (new-object net.webclient).DownloadFile($("http://status.julialang.org/download/"+$env:JULIAVERSION), "C:\projects\julia-binary.exe")
+# Run installer silently, output to C:\projects\julia
+  - C:\projects\julia-binary.exe /S /D=C:\projects\julia
+  - ps: (new-object net.webclient).DownloadFile("http://liquidtelecom.dl.sourceforge.net/project/mingwbuilds/host-windows/releases/4.8.1/32-bit/threads-win32/sjlj/x32-4.8.1-release-win32-sjlj-rev5.7z", "c:/xx.7z")
+  - cd c:\
+  - 7z x xx.7z > 7zlog.log
+  - cp c:\mingw32\bin\mingw32-make.exe c:\mingw32\bin\make.exe
+  - set PATH=C:\mingw32\bin;%PATH%
+  - make -v
+  - move C:\projects\jieba-jl C:\projects\Jieba
+
+build_script:
+# Need to convert from shallow to complete for Pkg.clone to work
+  - IF EXIST .git\shallow (git fetch --unshallow)
+
+test_script:
+  - C:\projects\julia\bin\julia -e "Pkg.init();Pkg.clone("git://github.com/qinwf/JiebaData.jl.git"); Pkg.clone("""C:/projects/Jieba"""); Pkg.build("""Jieba""");Pkg.test(""""Jieba""")"
