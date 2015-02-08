@@ -20,4 +20,4 @@ build_script:
   - IF EXIST .git\shallow (git fetch --unshallow)
 
 test_script:
-  - C:\projects\julia\bin\julia -e "Pkg.init();Pkg.clone("git://github.com/qinwf/JiebaData.jl.git"); Pkg.clone("""C:/projects/Jieba"""); Pkg.build("""Jieba""");Pkg.test(""""Jieba""")"
+  - C:\projects\julia\bin\julia -e 'Pkg.init();Pkg.clone("git://github.com/qinwf/JiebaData.jl.git"); Pkg.clone("C:/projects/Jieba"); Pkg.build("Jieba");Pkg.test("Jieba")'
