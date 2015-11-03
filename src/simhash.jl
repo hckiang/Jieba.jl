@@ -2,7 +2,7 @@
 export simhash
 export ham_distance
 
-function simhash_segment_lines(code::String,engine::SegmentWorker)
+function simhash_segment_lines(code::AbstractString,engine::SegmentWorker)
     
     # nlines = copy(engine.lines)
     fileopen = open(code,"r")
@@ -27,7 +27,7 @@ end
 
 
 
-function simhash_segment_words(code::String,engine::SegmentWorker) 
+function simhash_segment_words(code::AbstractString,engine::SegmentWorker) 
 
 	if engine.symbol == false
 		code = replace(code,r"[^\u2e80-\u3000\u3021-\ufe4fa-zA-Z0-9]", " ")
@@ -65,7 +65,7 @@ function simhash_segment_words(code::String,engine::SegmentWorker)
     return result
 end # cut_words
 
-function simhash(code::String,engine::SegmentWorker)
+function simhash(code::AbstractString,engine::SegmentWorker)
 	
 	if engine.private.worker_type != "simhash"
 		error("""worker's type is not "simhash".""")
@@ -87,7 +87,7 @@ function simhash(code::String,engine::SegmentWorker)
 
 end # segment()
 
-function ham_distance(codel::String,coder::String,engine::SegmentWorker)
+function ham_distance(codel::AbstractString,coder::AbstractString,engine::SegmentWorker)
     result_left  = simhash(codel,engine)
     result_right = simhash(coder,engine)
     distance     = ccall(distance_key,Culonglong,(Ptr{Void},Culonglong,Culonglong),engine.private.worker,result_left[2],result_right[2])

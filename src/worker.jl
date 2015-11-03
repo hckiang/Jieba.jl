@@ -15,7 +15,7 @@ immutable SegmentWorker_immupart
     num::Int
 end
 
-Base.print(io::IO,x::SegmentWorker_immupart) = begin
+print(io::IO,x::SegmentWorker_immupart) = begin
 
   if x.worker_type == "mix" || x.worker_type == "tag" || x.worker_type == "mp" || x.worker_type == "keywords" || x.worker_type == "simhash" 
       print("dict_path : "); println(x.dict)
@@ -41,7 +41,7 @@ Base.print(io::IO,x::SegmentWorker_immupart) = begin
   print("worker_id : "); println(x.num)
 end
 
-Base.show(io::IO,x::SegmentWorker_immupart) = begin
+show(io::IO,x::SegmentWorker_immupart) = begin
 
   if x.worker_type == "mix" || x.worker_type == "tag" || x.worker_type == "mp" || x.worker_type == "keywords" || x.worker_type == "simhash" 
       print("dict_path : "); println(x.dict)
@@ -79,7 +79,7 @@ type SegmentWorker
     freed::Bool
 end
 
-Base.print(io::IO,x::SegmentWorker) = begin
+print(io::IO,x::SegmentWorker) = begin
   print("Worker Type     : "); println(x.private.worker_type)
   print("Default Encoding: "); println(x.encoding)
   print("Detect Encoding : "); println(x.detect)
@@ -93,7 +93,7 @@ Base.print(io::IO,x::SegmentWorker) = begin
   println("Fix Settings    : "); println("");println(x.private);
 end
 
-Base.show(io::IO,x::SegmentWorker) = begin
+show(io::IO,x::SegmentWorker) = begin
   print("Worker Type     : "); println(x.private.worker_type)
   print("Default Encoding: "); println(x.encoding)
   print("Detect Encoding : "); println(x.detect)
@@ -107,7 +107,7 @@ Base.show(io::IO,x::SegmentWorker) = begin
   println("Fix Settings    : "); println("");println(x.private);
 end
 
-Base.print(io::IO,x::Array{Union(Nothing,SegmentWorker),1}) = begin
+print(io::IO,x::Array{Union{Void,SegmentWorker},1}) = begin
   if length(x) == 0
     return 
   end
@@ -117,7 +117,7 @@ Base.print(io::IO,x::Array{Union(Nothing,SegmentWorker),1}) = begin
   end
 end
 
-Base.show(io::IO,x::Array{Union(Nothing,SegmentWorker),1}) = begin
+show(io::IO,x::Array{Union{Void,SegmentWorker},1}) = begin
   if length(x) == 0
     return 
   end
@@ -127,7 +127,7 @@ Base.show(io::IO,x::Array{Union(Nothing,SegmentWorker),1}) = begin
   end
 end
 
-global workerlist = Array(Union(SegmentWorker,Nothing),0)
+global workerlist = Array(Union{SegmentWorker,Void},0)
 global workernum = 1
 
 function worker(;worker_type = "mix", encoding = "UTF-8", lines = 100000,output = " ",detect = true, symbol = false,write_file = true, topn =5,dict = DICTPATH,hmm = HMMPATH,user = USERPATH,
@@ -163,15 +163,15 @@ function worker(;worker_type = "mix", encoding = "UTF-8", lines = 100000,output 
          end
     )
     
-    const _worker::Union(SegmentWorker,Nothing) = SegmentWorker(_worker_immupart,encoding,detect,symbol,lines,output,write_file,topn,false)
+    const _worker::Union{SegmentWorker,Void} = SegmentWorker(_worker_immupart,encoding,detect,symbol,lines,output,write_file,topn,false)
 
     push!(workerlist,_worker)
     return _worker
 end
 
 
-function delete_worker(engine::Union(SegmentWorker,Nothing))
-	if( engine == nothing || engine.freed == true )
+function delete_worker(engine::Union{SegmentWorker,Void})
+	if( engine == Void || engine.freed == true )
 		return 
 	end
     if engine.private.worker_type == "mix"
@@ -190,7 +190,7 @@ function delete_worker(engine::Union(SegmentWorker,Nothing))
     ccall(free_sim_key,Void,(Ptr{Void},),engine.private.worker)  
     end
     engine.freed = true
-    workerlist[engine.private.num] = nothing
+    workerlist[engine.private.num] = Void
 end
 
 eval(Main, :(function workspace()
@@ -204,7 +204,7 @@ eval(Main, :(function workspace()
 	                   Jieba.删除引擎(Jieba.引擎列表[num])
 	                   end
                    end                   
-	            Base.workspace()
+	            workspace()
 	         end
 	               )
 )

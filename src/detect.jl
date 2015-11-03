@@ -9,7 +9,7 @@ function filecoding(filepath)
     return encoding
 end # segment()
 
-function transcode(filepath::String,input_encoding::String,detect::Bool = true)
+function transcode(filepath::AbstractString,input_encoding::AbstractString,detect::Bool = true)
     if detect == true
         primary_encoding = filecoding(filepath)
         if primary_encoding == "UTF-8"

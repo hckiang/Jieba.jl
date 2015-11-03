@@ -2,7 +2,7 @@
 export segment
 
 
-function cut_segment_lines(code::String,engine::SegmentWorker,FILESMODE::Bool,output)
+function cut_segment_lines(code::AbstractString,engine::SegmentWorker,FILESMODE::Bool,output)
     
     nlines = copy(engine.lines)
     fileopen = open(code,"r")
@@ -82,7 +82,7 @@ end
 
 
 
-function cut_segment_words(code::String,engine::SegmentWorker,FILESMODE::Bool) 
+function cut_segment_words(code::AbstractString,engine::SegmentWorker,FILESMODE::Bool) 
 
 	if engine.symbol == false
 		code = replace(code,r"[^\u2e80-\u3000\u3021-\ufe4fa-zA-Z0-9]", " ")
@@ -119,7 +119,7 @@ function cut_segment_words(code::String,engine::SegmentWorker,FILESMODE::Bool)
 end # cut_words
 
 
-function segment(code::String,engine::SegmentWorker)
+function segment(code::AbstractString,engine::SegmentWorker)
     if isfile(code) 
         if  engine.output == " "
         	base_names = replace(code, r"\.[^\.]*$","")
@@ -145,7 +145,7 @@ function segment(code::String,engine::SegmentWorker)
 
 end # segment()
 
-function <=(engine::SegmentWorker, code::String)
+function <=(engine::SegmentWorker, code::AbstractString)
   if engine.private.worker_type == "mix" || engine.private.worker_type == "hmm" || engine.private.worker_type == "mp" || engine.private.worker_type == "query"  
   segment(code,engine)
   elseif engine.private.worker_type == "tag"

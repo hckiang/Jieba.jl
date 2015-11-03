@@ -2,7 +2,7 @@
 export keywords
 
 
-function key_segment_lines(code::String,engine::SegmentWorker)
+function key_segment_lines(code::AbstractString,engine::SegmentWorker)
     
     # nlines = copy(engine.lines)
     fileopen = open(code,"r")
@@ -27,7 +27,7 @@ end
 
 
 
-function key_segment_words(code::String,engine::SegmentWorker) 
+function key_segment_words(code::AbstractString,engine::SegmentWorker) 
 
 	if engine.symbol == false
 		code = replace(code,r"[^\u2e80-\u3000\u3021-\ufe4fa-zA-Z0-9]", " ")
@@ -64,7 +64,7 @@ function key_segment_words(code::String,engine::SegmentWorker)
     return result
 end # cut_words
 
-function keywords(code::String,engine::SegmentWorker)
+function keywords(code::AbstractString,engine::SegmentWorker)
 	
 	if engine.private.worker_type != "keywords"
 		error("""worker's type is not "keywords".""")

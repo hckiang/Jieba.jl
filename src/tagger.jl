@@ -2,7 +2,7 @@
 export tagger
 
 
-function tag_segment_lines(code::String,engine::SegmentWorker,FILESMODE::Bool,output)
+function tag_segment_lines(code::AbstractString,engine::SegmentWorker,FILESMODE::Bool,output)
     
     nlines = copy(engine.lines)
     fileopen = open(code,"r")
@@ -82,7 +82,7 @@ end
 
 
 
-function tag_segment_words(code::String,engine::SegmentWorker,FILESMODE::Bool) 
+function tag_segment_words(code::AbstractString,engine::SegmentWorker,FILESMODE::Bool) 
 
 	if engine.symbol == false
 		code = replace(code,r"[^\u2e80-\u3000\u3021-\ufe4fa-zA-Z0-9]", " ")
@@ -120,7 +120,7 @@ function tag_segment_words(code::String,engine::SegmentWorker,FILESMODE::Bool)
 end # cut_words
 
 
-function tagger(code::String,engine::SegmentWorker)
+function tagger(code::AbstractString,engine::SegmentWorker)
 	
 	if engine.private.worker_type != "tag"
 		error("""worker's type is not "tag".""")
