@@ -1,4 +1,4 @@
-import Libdl
+using Libdl
 export DICTPATH 
 export HMMPATH
 export USERPATH
