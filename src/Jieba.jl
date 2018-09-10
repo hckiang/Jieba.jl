@@ -1,8 +1,6 @@
 module Jieba
 
-try
-	Pkg.installed("JiebaData")
-catch
+if ! haskey(Pkg.installed(), "JiebaData")
 	error("""Please add JiebaData Package: Pkg.clone("git://github.com/qinwf/JiebaData.jl.git")""")
 end
 
