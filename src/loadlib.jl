@@ -5,21 +5,19 @@ export USERPATH
 export libdemo 
 
 fnames = ["libdemo.so", "libdemo.dylib", "libdemo.dll"]
-paths = [pwd(), joinpath(dirname(Base.find_package("Jieba")), "..", "deps")]
+path = joinpath(dirname(Base.find_package("Jieba")), "..", "deps")
 global libname = ""
 found = false
-for path in paths
-    if !found
-        for fname in fnames
-            libname = Base.find_source_file(joinpath(path, fname))
-            if isfile(libname)
-                found = true
-                break
-            end
+if !found
+    for fname in fnames
+        if isfile(libname)
+            found = true
+            break
         end
     end
 end
-if !isfile(libname)
+
+if ! found
     error("Library cannot be found; it may not have been built correctly.\n Try include(\"build.jl\") from within the deps directory.")
 end
 
