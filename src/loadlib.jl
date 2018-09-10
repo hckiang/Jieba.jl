@@ -5,7 +5,7 @@ export USERPATH
 export libdemo 
 
 fnames = ["libdemo.so", "libdemo.dylib", "libdemo.dll"]
-paths = [pwd(), joinpath(Pkg.dir(), "Jieba", "deps")]
+paths = [pwd(), joinpath(dirname(Base.find_package("Jieba")), "..", "deps")]
 global libname
 found = false
 for path in paths
@@ -84,13 +84,13 @@ const free_sim_key =  Libdl.dlsym(libkey,:free_sim)
 const simhasher_res_key =  Libdl.dlsym(libkey,:simhasher_res)
 const distance_key =  Libdl.dlsym(libkey,:distance)
 
+joinpath(dirname(Base.find_package("Jieba")), ".."
 
-
-DICTPATH = joinpath(Pkg.dir(), "JiebaData","deps", "dict", "jieba.dict.utf8")
-HMMPATH  = joinpath(Pkg.dir(), "JiebaData","deps", "dict", "hmm_model.utf8")
-USERPATH = joinpath(Pkg.dir(), "JiebaData","deps", "dict", "user.dict.utf8")
-STOPPATH  = joinpath(Pkg.dir(), "JiebaData","deps", "dict", "stop_words.utf8")
-IDFPATH = joinpath(Pkg.dir(), "JiebaData","deps", "dict", "idf.utf8")
+DICTPATH = joinpath(dirname(Base.find_package("JiebaData")), "..","deps", "dict", "jieba.dict.utf8")
+HMMPATH  = joinpath(dirname(Base.find_package("JiebaData")), "..","deps", "dict", "hmm_model.utf8")
+USERPATH = joinpath(dirname(Base.find_package("JiebaData")), "..","deps", "dict", "user.dict.utf8")
+STOPPATH  = joinpath(dirname(Base.find_package("JiebaData")), "..","deps", "dict", "stop_words.utf8")
+IDFPATH = joinpath(dirname(Base.find_package("JiebaData")), "..","deps", "dict", "idf.utf8")
 
 if !isfile(DICTPATH)
     error("Can not find system dictionary.")
