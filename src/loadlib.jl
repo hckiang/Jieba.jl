@@ -11,7 +11,7 @@ found = false
 for path in paths
     if !found
         for fname in fnames
-            libname = Base.find_in_path(joinpath(path, fname))
+            libname = Base.find_source_file(joinpath(path, fname))
             if isfile(libname)
                 found = true
                 break
