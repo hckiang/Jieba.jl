@@ -6,7 +6,7 @@ export libdemo
 
 fnames = ["libdemo.so", "libdemo.dylib", "libdemo.dll"]
 paths = [pwd(), joinpath(dirname(Base.find_package("Jieba")), "..", "deps")]
-global libname
+global libname = ""
 found = false
 for path in paths
     if !found
